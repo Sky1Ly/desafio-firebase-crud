@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id">
-          <th scope="row">user.id</th>
+          <th scope="row">{{ user.id }}</th>
           <td>{{ user.name }}</td>
           <td>{{ user.lastName }}</td>
           <td>{{ user.email }}</td>
@@ -34,13 +34,7 @@
       <div class="mb-3 row">
         <label for="name" class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-10">
-          <input
-            type="text"
-            readonly
-            class="form-control-plaintext"
-            id="name"
-            v-model="userForm.name"
-          />
+          <input type="text" class="form-control" id="name" v-model="userForm.name" />
         </div>
       </div>
       <div class="mb-3 row">
@@ -70,7 +64,7 @@
 <script>
 //Importación de la DB y el CRUD de Firebase
 import { db } from '@/firebaseConfig'
-import { colection, addDoc, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore'
 
 export default {
   data() {
@@ -93,7 +87,7 @@ export default {
 
   methods: {
     async fetchUsers() {
-      const querySnapshot = await getDocs(colection(db, 'users'))
+      const querySnapshot = await getDocs(collection(db, 'users'))
       //Carga el array de users
       //Map crea objeto nuevo con id y se propaga con doc.data()
       //sort ordena los datos
@@ -127,7 +121,7 @@ export default {
       }
       //Si el producto es nuevo
       else {
-        await addDoc(doc(db, 'users'), this.userForm)
+        await addDoc(collection(db, 'users'), this.userForm)
       }
       //Limpia el formulario
       this.cancel()
